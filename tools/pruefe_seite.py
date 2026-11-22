@@ -55,11 +55,31 @@ BEKANNT = {'https://www.lagonord.it',
            'https://www.lagonord.de', 'https://www.lagonord.de/privacy.html',
            'https://www.lagonord.de/imprint.html', 'https://unicabenaco.com',
            'https://unicabenaco.com/assets/og.jpg',
-           'https://www.instagram.com/luna_the_digital_dog/'}
+           'https://www.instagram.com/luna_the_digital_dog/',
+           # Seit 22.11.2026: app.html wird erst seitdem gelesen (siehe
+           # woerterbuch). Alle drei standen dort schon vorher:
+           # die canonical-Zeile der Seite selbst,
+           'https://unicabenaco.com/app',
+           # und die beiden Platzhalter im auskommentierten Block „ZUM LAUNCH:
+           # Store-Links" — Punkt 6 liest Kommentare mit. Beim Start werden
+           # sie durch die echten Store-Adressen ersetzt und hier nachgezogen.
+           'https://apps.apple.com/app/idXXXXXXXX',
+           'https://play.google.com/store/apps/details?id=XXX',
+           # Ebenso seit 22.11.2026 lesbar, beide standen vorher schon dort:
+           # canonical-Zeilen von partner.html und confirmed.html,
+           'https://unicabenaco.com/partner', 'https://unicabenaco.com/confirmed',
+           # und der WhatsApp-Knopf der Partnerseite; die Adresse wird im
+           # Skript aus "https://wa.me/" + Nummer + Text zusammengesetzt.
+           'https://wa.me/'}
 
 # Bilder, die schon vor Spec 0001 ohne loading="lazy" dastanden.
 VORBESTAND = {'assets/app/onboarding_wer.jpg', 'assets/cristina.jpg',
-              'assets/tim.jpg', 'assets/luna.jpg'}
+              'assets/tim.jpg', 'assets/luna.jpg',
+              # Seit 22.11.2026: Kopfbild von app.html, steht über der Falz und
+              # soll nicht lazy laden. Die Falz kennt der Pruefer nur in
+              # index.html ('<!-- 2 · PROBLEM'); in app.html gilt alles als
+              # unterhalb.
+              '/assets/app/oggi_greeting.jpg'}
 
 
 def usage():
@@ -75,9 +95,13 @@ def woerterbuch(quelle, lang):
     Schluessel stehen mehrere pro Zeile, Werte duerfen Kommas und maskierte
     Anfuehrungszeichen enthalten — darum Token fuer Token statt zeilenweise.
     """
-    m = re.search(r'\n %s:\{\n(.*?)\n },?\n [a-z]{2}:\{|\n %s:\{\n(.*?)\n }\n};'
+    # Einrueckung beliebig, aber innerhalb eines Blocks gleich (\1, \3):
+    # index.html und partner.html ruecken mit einem Leerzeichen ein, app.html
+    # und confirmed.html mit zweien. Bis 22.11.2026 kannte der Pruefer nur ein
+    # Leerzeichen und fand dort kein Woerterbuch — app.html war also nie grün.
+    m = re.search(r'\n( +)%s:\{\n(.*?)\n\1},?\n\1[a-z]{2}:\{|\n( +)%s:\{\n(.*?)\n\3}\n};'
                   % (lang, lang), quelle, re.S)
-    blob = (m.group(1) or m.group(2)) if m else ''
+    blob = (m.group(2) or m.group(4)) if m else ''
     return dict(re.findall(r'(?:^|[,{]\s*)\s*([a-z_0-9]+):("(?:[^"\\]|\\.)*")',
                            blob, re.M))
 
@@ -172,9 +196,12 @@ def pruefe(s, alt, mit_bildern=True):
                 (hinweise if src in VORBESTAND else fehler).append(
                     'kein loading="lazy" unterhalb der Falz: ' + src
                     + (' (Altbestand)' if src in VORBESTAND else ''))
-            if os.path.exists(src):
-                kb = os.path.getsize(src) / 1000
-                grenze = 200 if src.startswith('assets/foto/') else 250
+            # app.html und partner.html schreiben Pfade ab der Wurzel
+            # ("/assets/…"); bis 22.11.2026 galten sie deshalb als fehlend.
+            datei = src.lstrip('/')
+            if os.path.exists(datei):
+                kb = os.path.getsize(datei) / 1000
+                grenze = 200 if datei.startswith('assets/foto/') else 250
                 if kb > grenze:
                     fehler.append('%s ist %.0f KB (Grenze %d KB)' % (src, kb, grenze))
             elif 'onerror=' not in tag:
