@@ -3,6 +3,7 @@
  * n8n-Webhook. n8n übernimmt Double-Opt-in (Brevo-Bestätigungsmail) und
  * leitet nach Klick auf https://unicabenaco.com/confirmed weiter.
  * Erfolgs-Antwort: { "ok": true, "message": "..." }.
+ * source: aus ?q= im Link, sonst der feste Wert der Seite (quelleAusLink).
  */
 (function () {
   "use strict";
@@ -14,8 +15,23 @@
 
   function val(el) { return el && typeof el.value === "string" ? el.value.trim() : ""; }
 
+  /* Quelle aus dem Link (Spec 0013 §9a.3): ?q=ig-profil, ?q=ig-story oder
+   * ?q=qr-<gastgeber> (Kleinbuchstaben, Ziffern, Bindestrich). Alles andere
+   * zaehlt nicht als Quelle; dann gilt der feste Wert der Seite (opts.source).
+   * Gelesen wird beim Absenden: der Sprachumschalter schreibt nur ?lang= in
+   * die Adresse und laesst ?q= stehen. */
+  var QUELLE = /^(ig-profil|ig-story|qr-[a-z0-9][a-z0-9-]{0,39})$/;
+  function quelleAusLink() {
+    try {
+      var q = new URLSearchParams(window.location.search).get("q");
+      q = q ? q.trim().toLowerCase() : "";
+      return QUELLE.test(q) ? q : "";
+    } catch (e) { return ""; }
+  }
+
   window.GardaWaitlist = {
     endpoint: WAITLIST_ENDPOINT,
+    quelle: quelleAusLink,
     init: function (opts) {
       opts = opts || {};
       var form = document.getElementById(opts.formId || "wlForm");
@@ -70,7 +86,7 @@
           name: name,
           email: email,
           lang: lang,
-          source: opts.source || "",
+          source: quelleAusLink() || opts.source || "",
           consent: true,
           hp: hpVal
         };
