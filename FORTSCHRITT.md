@@ -9,6 +9,33 @@ i18n-Schlüssel in beide Richtungen). Selbsttest: `--selftest`.
 
 ---
 
+## WEB1 — Warteliste: Quelle aus dem Link, Start im Frühjahr 2027
+
+**Branch:** `web1-quelle-und-start` (Spec 0013 §9a.3, Leitstand und Tim 22.11.2026)
+
+| Commit | Was |
+|---|---|
+| Warteliste: source aus ?q= | `assets/waitlist.js` schickt `ig-profil`, `ig-story`, `qr-<gastgeber>` als source; sonst der feste Wert der Seite (`app-qr`, `website`) |
+| Prüfer | `tools/pruefe_seite.py` liest Wörterbücher mit zwei Leerzeichen Einrückung und Pfade ab der Wurzel; Altbefunde mit Grund nachgezogen |
+| Frühjahr 2027 | `app_eyebrow`, `hero_note`, `ph_note`, `po_pill` in DE/IT/EN, je ENTWURF, Altfassung auskommentiert darunter |
+
+**Prüfer:** index.html, app.html, partner.html, confirmed.html grün; `--selftest`
+grün. Vorher waren app.html und confirmed.html nie geprüft worden (kein
+Wörterbuch gefunden) und partner.html rot (Bildpfade ab der Wurzel galten als
+fehlend).
+
+**Unverändert:** `WAITLIST_ENDPOINT`, `CNAME`, n8n.
+
+**Offen**
+
+- Cristina: die drei Frühjahrs-Texte freigeben.
+- „Herbst 2026" steht noch in `wl_eyebrow`, `wl_p`, `faq5_a` (index.html) und
+  `cf_eyebrow` (confirmed.html), je DE/IT/EN. Nicht beauftragt, darum nicht
+  geändert; nach dem Livegang widerspricht sich die Startseite sonst selbst.
+- Tim: Ende-zu-Ende-Test mit `?q=ig-story` (kommt source in Brevo an?).
+
+---
+
 ## Auftrag Aufnahmen in drei Sprachen — Nachtrag zum Register
 
 **Branch:** `claude/unicabenaco-webseite-fixes-nbwogg`
