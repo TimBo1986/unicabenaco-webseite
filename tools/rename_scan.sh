@@ -52,7 +52,9 @@ PATTERNS=(
   "M3 alte Mailadressen|@gardaunica\.|0"
   "MK Wortmarke alt|Garda <em>Unica</em>|0"
   "MK Wortmarke neu|Unica <em>Benaco</em>|5"
-  "M1 garda-unica gesamt|garda[ _-]?unica|4 = PDF-Dateiname, faellt mit WEB-04"
+  # Soll bis WEB2: "4 = PDF-Dateiname, faellt mit WEB-04". Seit WEB2 (25.11.2026) ist der Dateiname weg; uebrig sind
+  # das Suchmuster hier (2 Zeilen) und das Protokoll in FORTSCHRITT.md (3 Zeilen), kein Verweis mehr in einer Seite.
+  "M1 garda-unica gesamt|garda[ _-]?unica|5 = Werkzeug (2) + FORTSCHRITT (3), kein Seitenverweis"
   "M8 unica-benaco|unica[ _-]?benaco|steigend"
   "M9 benaco-unica (Gegenprobe)|benaco[ _-]?unica|0"
   # Die Geografie-Kontrolle ist mehrfach absichtlich gewachsen:
