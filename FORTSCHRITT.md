@@ -9,6 +9,20 @@ i18n-Schlüssel in beide Richtungen). Selbsttest: `--selftest`.
 
 ---
 
+## WEB2b — Korrektur an der Live-Seite nach R2 (Knöpfe im Kopf, Alt-Texte, rename_scan)
+
+**Branch:** `web/web2b-korrektur` von `646c83e` (Leitstand 25.11.2026, Befunde R2-WEB2-1 und R2-WEB2-2)
+
+| Commit | Was |
+|---|---|
+| Geräte 150 px | Über 1180 px so breit wie darunter; „Auf die Warteliste“ und „Wie es funktioniert“ in DE/IT/EN nebeneinander bei 1024, 1180, 1181, 1280, 1440, 1920 px (vorher DE/IT ab 1181 untereinander, Textspalte 374 statt 494 px) |
+| Alt-Texte | `territorio_map`, `scopri_1`, `scopri_2` im Markup wortgleich mit dem DE-Wörterbuch |
+| rename_scan | M1 Soll 5 (Werkzeug 2, FORTSCHRITT 3) |
+
+**Prüfer:** index, partner, app, confirmed grün gegen `646c83e`; `--selftest` grün; `rename_scan.sh` Exit 0.
+
+---
+
 ## WEB1 — Warteliste: Quelle aus dem Link, Start im Frühjahr 2027
 
 **Branch:** `web1-quelle-und-start` (Spec 0013 §9a.3, Leitstand und Tim 22.11.2026)
