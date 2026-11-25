@@ -115,11 +115,14 @@ h1 em{font-style:italic;color:var(--terracotta)}
 .pcard.free p{color:var(--notte-2)}
 /* hero: drei Handys gestaffelt (SCOPRI 1, SCOPRI 2, Karte) */
 .hero-trio{display:flex;gap:16px;align-items:flex-start;flex-shrink:0}
-.hero-trio .ht{width:190px;background:#141414;border-radius:30px;padding:6px;box-shadow:0 30px 70px -26px rgba(26,37,64,.42);flex:none}
-.hero-trio .ht img{display:block;width:100%;height:auto;border-radius:24px}
-.hero-trio .ht2{margin-top:30px}
-.hero-trio .ht3{margin-top:60px}
-@media(max-width:1180px){.hero-trio .ht{width:150px;border-radius:24px}.hero-trio .ht img{border-radius:19px}.hero-trio .ht2{margin-top:22px}.hero-trio .ht3{margin-top:44px}}
+/* WEB2b (R2-WEB2-1, Leitstand 25.11.2026): über 1180 px so breit wie darunter (150 px), damit „Auf die Warteliste“ und
+   „Wie es funktioniert“ in DE/IT/EN nebeneinander bleiben (mit 190 px war die Textspalte 374 px schmal). Vorher ab 1181 px:
+   .ht width:190px;border-radius:30px · img border-radius:24px · .ht2 margin-top:30px · .ht3 margin-top:60px,
+   und @media(max-width:1180px) mit den Werten, die jetzt überall gelten. */
+.hero-trio .ht{width:150px;background:#141414;border-radius:24px;padding:6px;box-shadow:0 30px 70px -26px rgba(26,37,64,.42);flex:none}
+.hero-trio .ht img{display:block;width:100%;height:auto;border-radius:19px}
+.hero-trio .ht2{margin-top:22px}
+.hero-trio .ht3{margin-top:44px}
 @media(max-width:860px){.hero-trio{gap:10px;justify-content:center}.hero-trio .ht{width:30%;max-width:150px}.hero-trio .ht2{margin-top:16px}.hero-trio .ht3{margin-top:32px}}
 /* live chat in phone */
 .chat-scr{background:var(--carta);display:flex;flex-direction:column}
