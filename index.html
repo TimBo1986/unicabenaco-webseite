@@ -113,6 +113,14 @@ h1 em{font-style:italic;color:var(--terracotta)}
 .pcard p{margin-top:10px;font-size:14px;line-height:1.65}
 .pcard.full p{color:rgba(250,245,232,.72)}
 .pcard.free p{color:var(--notte-2)}
+/* hero: drei Handys gestaffelt (SCOPRI 1, SCOPRI 2, Karte) */
+.hero-trio{display:flex;gap:16px;align-items:flex-start;flex-shrink:0}
+.hero-trio .ht{width:190px;background:#141414;border-radius:30px;padding:6px;box-shadow:0 30px 70px -26px rgba(26,37,64,.42);flex:none}
+.hero-trio .ht img{display:block;width:100%;height:auto;border-radius:24px}
+.hero-trio .ht2{margin-top:30px}
+.hero-trio .ht3{margin-top:60px}
+@media(max-width:1180px){.hero-trio .ht{width:150px;border-radius:24px}.hero-trio .ht img{border-radius:19px}.hero-trio .ht2{margin-top:22px}.hero-trio .ht3{margin-top:44px}}
+@media(max-width:860px){.hero-trio{gap:10px;justify-content:center}.hero-trio .ht{width:30%;max-width:150px}.hero-trio .ht2{margin-top:16px}.hero-trio .ht3{margin-top:32px}}
 /* live chat in phone */
 .chat-scr{background:var(--carta);display:flex;flex-direction:column}
 .chat-head{display:flex;align-items:center;gap:9px;padding:16px 16px 12px;border-bottom:1px solid var(--linea-soft);flex-shrink:0}
@@ -496,8 +504,10 @@ footer a:hover{color:var(--notte)}
       </div>
       <div class="hero-note" data-i18n="hero_note">Start: Frühjahr 2027 · kostenlos</div>
     </div>
-    <div class="phone-frame reveal">
-      <div class="scr"><img data-app-img="territorio_map" data-i18n-alt="alt_territorio_map" src="assets/app/de/territorio_map.jpg" alt="Unica Benaco — wie sich der See heute verteilt: zehn Orte auf der Karte, dazu Wetter, Wassertemperatur und Verkehr" width="1080" height="2115" fetchpriority="high" decoding="async"></div>
+    <div class="hero-trio reveal">
+      <div class="ht ht1"><img data-app-img="scopri_1" data-i18n-alt="alt_scopri_1" src="assets/app/de/scopri_1.jpg" alt="Unica Benaco — SCOPRI: der See, handverlesen" width="605" height="1282" fetchpriority="high" decoding="async"></div>
+      <div class="ht ht2"><img data-app-img="scopri_2" data-i18n-alt="alt_scopri_2" src="assets/app/de/scopri_2.jpg" alt="Unica Benaco — SCOPRI: weitere Sammlungen" width="605" height="1281" decoding="async"></div>
+      <div class="ht ht3"><img data-app-img="territorio_map" data-i18n-alt="alt_territorio_map" src="assets/app/de/territorio_map.jpg" alt="Unica Benaco — wie sich der See heute verteilt" width="1080" height="2115" decoding="async"></div>
     </div>
   </div>
 </header>
@@ -1246,6 +1256,9 @@ var I18N={
      wäre schlicht falsch. Die deutschen Werte sind die bis dahin im Markup
      stehenden, wortgleich übernommen — freigegebene Copy, kein Entwurf. */
   alt_territorio_map:"Unica Benaco — wie sich der See heute verteilt: zehn Orte auf der Karte, dazu Wetter, Wassertemperatur und Verkehr",
+  /* ENTWURF — Cristina entscheidet */
+  alt_scopri_1:"Unica Benaco — SCOPRI: der See, handverlesen. Oben das Diario von Cristina, darunter die Sammlungen Vino & Olio, Le Tavole & Dimore, Il Corso und A Quattro Zampe",
+  alt_scopri_2:"Unica Benaco — SCOPRI: weitere Sammlungen von Spiagge bis Da Vedere, darunter Le Date mit In Piazza, allen Terminen des Jahres",
   alt_il_giorno:"Unica Benaco — Il Polso del Lago: zehn Orte über den Tag, als Vorhersage gekennzeichnet",
   alt_traffic:"Unica Benaco — Zufahrten zu zehn Orten, mit Sperrungen und Staulängen nach Straßenname",
   alt_meteo:"Unica Benaco — Wetter mit benannter Quelle, Vorhersage- und Berechnet-Kennzeichnung",
@@ -1537,6 +1550,9 @@ var I18N={
      stehen: Il Polso del Lago, Il Cerchio, Sorprendimi, A quattro mani,
      Residente d'Onore. */
   alt_territorio_map:"Unica Benaco — come si distribuisce il lago oggi: dieci località sulla mappa, con meteo, temperatura dell'acqua e traffico",
+  /* ENTWURF — Cristina entscheidet */
+  alt_scopri_1:"Unica Benaco — SCOPRI: il lago, scelto a mano. In alto il diario di Cristina, sotto le collezioni Vino & Olio, Le Tavole & Dimore, Il Corso e A Quattro Zampe",
+  alt_scopri_2:"Unica Benaco — SCOPRI: altre collezioni, da Spiagge a Da Vedere, e Le Date con In Piazza, tutti gli appuntamenti dell'anno",
   alt_il_giorno:"Unica Benaco — Il Polso del Lago: dieci località nell'arco della giornata, contrassegnate come previsione",
   alt_traffic:"Unica Benaco — gli accessi a dieci località, con chiusure e code per nome della strada",
   alt_meteo:"Unica Benaco — meteo con fonte citata, contrassegni Previsione e Calcolato",
@@ -1828,6 +1844,9 @@ var I18N={
      stehen: Il Polso del Lago, Il Cerchio, Sorprendimi, A quattro mani,
      Residente d'Onore. */
   alt_territorio_map:"Unica Benaco — how the lake spreads out today: ten towns on the map, with weather, water temperature and traffic",
+  /* ENTWURF — Cristina entscheidet */
+  alt_scopri_1:"Unica Benaco — SCOPRI: the lake, hand-picked. At the top Cristina's diary, below the collections Vino & Olio, Le Tavole & Dimore, Il Corso and A Quattro Zampe",
+  alt_scopri_2:"Unica Benaco — SCOPRI: more collections, from Spiagge to Da Vedere, and Le Date with In Piazza, every date of the year",
   alt_il_giorno:"Unica Benaco — Il Polso del Lago: ten towns across the day, labelled as forecast",
   alt_traffic:"Unica Benaco — approaches to ten towns, with closures and queue lengths by street name",
   alt_meteo:"Unica Benaco — weather with a named source, Forecast and Computed labels",

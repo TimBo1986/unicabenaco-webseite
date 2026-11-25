@@ -195,7 +195,7 @@ footer a:hover{color:var(--notte)}
     <a class="logo" href="https://unicabenaco.com">Unica <em>Benaco</em><span class="logo-desc">Lago di Garda</span></a>
     <div class="nav-right">
       <a class="nav-back" href="https://unicabenaco.com" data-i18n="pn_back">← Zur Gäste-Seite</a>
-      <a class="nav-pdf" href="/assets/garda-unica-partner-cantine-it.pdf" target="_blank" rel="noopener" data-i18n="pn_pdf">↓ Flyer PDF</a>
+      <a class="nav-pdf" data-flyer-pdf href="/assets/unica-benaco-partner-cantine-de.pdf" target="_blank" rel="noopener" data-i18n="pn_pdf">↓ Flyer PDF</a>
       <div class="lang" role="group" aria-label="Sprache / Lingua / Language">
         <button data-lang="de" class="active">DE</button>
         <button data-lang="it">IT</button>
@@ -383,12 +383,12 @@ footer a:hover{color:var(--notte)}
     <h2 data-i18n="pf_h2">Alles auf zwei Seiten, <em>zum Ausdrucken.</em></h2>
     <div class="flyer-grid">
       <div class="flyer-shots reveal">
-        <a href="/assets/garda-unica-partner-cantine-it.pdf" target="_blank" rel="noopener"><img src="/assets/flyer-cantine-p1.jpg" alt="Flyer Unica Benaco per cantine — pagina 1" width="620" height="877" loading="lazy" decoding="async"></a>
-        <a href="/assets/garda-unica-partner-cantine-it.pdf" target="_blank" rel="noopener"><img src="/assets/flyer-cantine-p2.jpg" alt="Flyer Unica Benaco per cantine — pagina 2" width="620" height="877" loading="lazy" decoding="async"></a>
+        <a data-flyer-pdf href="/assets/unica-benaco-partner-cantine-de.pdf" target="_blank" rel="noopener"><img id="flyerP1" data-i18n-alt="alt_flyer_p1" src="/assets/flyer-cantine-de-p1.jpg" alt="Unica Benaco Flyer für Weingüter — Seite 1" width="620" height="877" loading="lazy" decoding="async"></a>
+        <a data-flyer-pdf href="/assets/unica-benaco-partner-cantine-de.pdf" target="_blank" rel="noopener"><img id="flyerP2" data-i18n-alt="alt_flyer_p2" src="/assets/flyer-cantine-de-p2.jpg" alt="Unica Benaco Flyer für Weingüter — Seite 2" width="620" height="877" loading="lazy" decoding="async"></a>
       </div>
       <div class="flyer-copy">
         <p data-i18n="pf_p">Unser Flyer für Weingüter und Ölmühlen: dieselbe Geschichte, die ihr gerade gelesen habt, im A4-Format — bequem in Ruhe zu lesen, zum Ausdrucken oder Weitergeben.</p>
-        <a class="btn-download" href="/assets/garda-unica-partner-cantine-it.pdf" target="_blank" rel="noopener" data-i18n="pf_btn">↓ Flyer herunterladen (PDF)</a>
+        <a class="btn-download" data-flyer-pdf href="/assets/unica-benaco-partner-cantine-de.pdf" target="_blank" rel="noopener" data-i18n="pf_btn">↓ Flyer herunterladen (PDF)</a>
         <span class="flyer-meta" data-i18n="pf_meta">A4 · 2 Seiten · 680 KB · italienisch</span>
       </div>
     </div>
@@ -483,7 +483,8 @@ var I18N={
   pc_claim:"Der Gardasee verdient es, gut entdeckt zu werden.<br>Und ihr verdient es, <em>gefunden zu werden.</em>",
   pf_eyebrow:"Die Präsentation",pf_h2:"Alles auf zwei Seiten, <em>zum Ausdrucken.</em>",
   pf_p:"Unser Flyer für Weingüter und Ölmühlen: dieselbe Geschichte, die ihr gerade gelesen habt, im A4-Format — bequem in Ruhe zu lesen, zum Ausdrucken oder Weitergeben.",
-  pf_btn:"↓ Flyer herunterladen (PDF)",pf_meta:"A4 · 2 Seiten · 680 KB · italienisch",
+  pf_btn:"↓ Flyer herunterladen (PDF)",pf_meta:"A4 · 2 Seiten · 314 KB · deutsch", /* ENTWURF; alte Fassung "A4 · 2 Seiten · 680 KB · italienisch" */
+  alt_flyer_p1:"Unica Benaco Flyer für Weingüter — Seite 1",alt_flyer_p2:"Unica Benaco Flyer für Weingüter — Seite 2",
   pk_eyebrow:"Sprechen wir darüber",pk_h2:"Schreibt uns — wir <em>rufen gern zurück.</em>",
   pk_p:"Zwei Zeilen genügen: wer ihr seid, wo ihr seid und was ihr anbietet. Um den Rest kümmern wir uns.",
   pk_mail:"Schreibt uns eine Mail",pk_direct:"oder direkt:",
@@ -557,7 +558,8 @@ var I18N={
   pc_claim:"Il Garda merita di essere scoperto bene.<br>E voi meritate di essere <em>trovati.</em>",
   pf_eyebrow:"La presentazione",pf_h2:"Tutto in due pagine, <em>da stampare.</em>",
   pf_p:"Il nostro flyer per cantine e frantoi: la stessa storia che avete appena letto, in formato A4 — comodo da leggere con calma, da stampare o da girare a un collega.",
-  pf_btn:"↓ Scarica il flyer (PDF)",pf_meta:"A4 · 2 pagine · 680 KB · italiano",
+  pf_btn:"↓ Scarica il flyer (PDF)",pf_meta:"A4 · 2 pagine · 305 KB · italiano", /* ENTWURF; vecchia versione "A4 · 2 pagine · 680 KB · italiano" */
+  alt_flyer_p1:"Flyer Unica Benaco per cantine — pagina 1",alt_flyer_p2:"Flyer Unica Benaco per cantine — pagina 2",
   pk_eyebrow:"Parliamone",pk_h2:"Scriveteci — vi <em>richiamiamo volentieri.</em>",
   pk_p:"Due righe bastano: chi siete, dove siete e cosa offrite. Al resto pensiamo noi.",
   pk_mail:"Scriveteci una mail",pk_direct:"oppure direttamente:",
@@ -631,7 +633,8 @@ var I18N={
   pc_claim:"Lake Garda deserves to be discovered well.<br>And you deserve to be <em>found.</em>",
   pf_eyebrow:"The presentation",pf_h2:"Everything on two pages, <em>ready to print.</em>",
   pf_p:"Our flyer for wineries and oil mills: the same story you've just read, in A4 — easy to read at your leisure, to print or to pass on to a colleague.",
-  pf_btn:"↓ Download the flyer (PDF)",pf_meta:"A4 · 2 pages · 680 KB · Italian",
+  pf_btn:"↓ Download the flyer (PDF)",pf_meta:"A4 · 2 pages · 309 KB · English", /* ENTWURF; old version "A4 · 2 pages · 680 KB · Italian" */
+  alt_flyer_p1:"Unica Benaco flyer for wineries — page 1",alt_flyer_p2:"Unica Benaco flyer for wineries — page 2",
   pk_eyebrow:"Let's talk",pk_h2:"Write to us — we'll <em>gladly call back.</em>",
   pk_p:"Two lines are enough: who you are, where you are and what you offer. We'll take care of the rest.",
   pk_mail:"Write us an email",pk_direct:"or directly:",
@@ -660,6 +663,10 @@ function setLang(lang){
     var k=el.getAttribute("data-i18n");
     if(d[k]!==undefined)el.innerHTML=d[k];
   });
+  document.querySelectorAll("[data-i18n-alt]").forEach(function(el){
+    var k=el.getAttribute("data-i18n-alt");
+    if(d[k]!==undefined)el.setAttribute("alt",d[k]);
+  });
   if(d._title)document.title=d._title;
   var md=document.querySelector('meta[name="description"]');
   if(md&&d._desc)md.setAttribute("content",d._desc);
@@ -668,6 +675,11 @@ function setLang(lang){
   if(mb)mb.href="mailto:"+MAIL_TO+"?subject="+encodeURIComponent(d.pk_subject)+"&body="+encodeURIComponent(d.pk_body);
   var wb=document.getElementById("waBtn");
   if(wb)wb.href="https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(d.pk_wa);
+  var flyerPdf="/assets/unica-benaco-partner-cantine-"+lang+".pdf";
+  document.querySelectorAll("[data-flyer-pdf]").forEach(function(a){a.setAttribute("href",flyerPdf);});
+  var fp1=document.getElementById("flyerP1"),fp2=document.getElementById("flyerP2");
+  if(fp1)fp1.setAttribute("src","/assets/flyer-cantine-"+lang+"-p1.jpg");
+  if(fp2)fp2.setAttribute("src","/assets/flyer-cantine-"+lang+"-p2.jpg");
   document.querySelectorAll(".lang button").forEach(function(b){b.classList.toggle("active",b.dataset.lang===lang)});
   if(window.GardaLang)GardaLang.remember(lang);
   try{var u=new URL(window.location);u.searchParams.set("lang",lang);window.history.replaceState({},"",u);}catch(e){}
