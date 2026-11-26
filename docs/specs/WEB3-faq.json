@@ -1,5 +1,5 @@
 {
-  "_herkunft": "Leitstand 26.11.2026 22:45, Auftrag WEB3 „FAQ berichtigen“: Texte freigegeben von Tim am 26.11.2026; IT noch zur Durchsicht bei Cristina. Wortlaut genau so.",
+  "_herkunft": "Leitstand 26.11.2026 22:45, Auftrag WEB3 „FAQ berichtigen“: Texte freigegeben von Tim am 26.11.2026; IT noch zur Durchsicht bei Cristina. Wortlaut genau so. Leitstand 26.11.2026 23:15: FAQ 6 berichtigt (Datenschutz ist maßgeblich: eigener Server in Deutschland, Brevo nur Versand); Fundliste auf partner, app, confirmed umgesetzt (weitere_seiten).",
   "datei": "index.html",
   "de": {
     "faq1_a": "Die App ist für Gäste kostenlos – und auch für Betriebe ist die Aufnahme kostenlos. Wir nehmen nur Orte auf, die uns selbst überzeugt haben. Gebucht wird direkt beim Betrieb. Bei jeder Empfehlung steht, warum.",
@@ -7,7 +7,7 @@
     "faq3_a": "Empfehlungen sind bei uns unverkäuflich – das ist unser wichtigstes Versprechen. Jeden Ort haben wir selbst besucht und ausgewählt, mit dem Wissen von Menschen, die am See leben.",
     "faq4_a": "Ja. Unica Benaco gibt es auf Deutsch, Italienisch und Englisch – mit dem Wissen von Menschen, die am See leben.",
     "faq5_a": "Anfang 2027, zuerst im Süden des Gardasees, von Torri del Benaco bis Salò. Wer auf der Warteliste steht, erfährt es als Erste:r.",
-    "faq6_a": "Deine E-Mail für die Warteliste liegt bei Brevo auf Servern in der EU, nach DSGVO, mit Double-Opt-in. Wir nutzen sie nur, um dir den Start der App mitzuteilen.",
+    "faq6_a": "Deine E-Mail für die Warteliste liegt auf unserem eigenen Server in Deutschland, nach DSGVO, mit Double-Opt-in. Wir nutzen sie nur, um dir den Start der App mitzuteilen.",
     "faq7_a": "Ja, für beide. Sobald es losgeht, sagen wir dir, wo du Unica Benaco laden kannst."
   },
   "it": {
@@ -16,7 +16,7 @@
     "faq3_a": "Da noi i consigli non sono in vendita: è la nostra promessa più importante. Ogni luogo lo abbiamo visitato e scelto di persona, con la conoscenza di chi vive sul lago.",
     "faq4_a": "Sì. Unica Benaco è disponibile in italiano, tedesco e inglese – con la conoscenza di chi vive sul lago.",
     "faq5_a": "All'inizio del 2027, prima nel sud del lago di Garda, da Torri del Benaco a Salò. Chi è in lista d'attesa lo saprà per primo.",
-    "faq6_a": "La tua email per la lista d'attesa è conservata da Brevo su server nell'UE, secondo il GDPR, con doppio opt-in. La usiamo solo per comunicarti il lancio dell'app.",
+    "faq6_a": "La tua email per la lista d'attesa è conservata sul nostro server in Germania, secondo il GDPR, con doppio opt-in. La usiamo solo per comunicarti il lancio dell'app.",
     "faq7_a": "Sì, per entrambi. Appena si parte, ti diciamo dove scaricare Unica Benaco."
   },
   "en": {
@@ -25,7 +25,48 @@
     "faq3_a": "Our recommendations are not for sale – that's our most important promise. We've visited and chosen every place ourselves, with the knowledge of people who live on the lake.",
     "faq4_a": "Yes. Unica Benaco is available in English, German and Italian – with the knowledge of people who live on the lake.",
     "faq5_a": "Early 2027, starting in the south of Lake Garda, from Torri del Benaco to Salò. Waitlist members will be the first to know.",
-    "faq6_a": "Your waitlist email is stored with Brevo on servers in the EU, under GDPR, with double opt-in. We use it only to tell you when the app launches.",
+    "faq6_a": "Your waitlist email is stored on our own server in Germany, under GDPR, with double opt-in. We use it only to tell you when the app launches.",
     "faq7_a": "Yes, both. The moment we go live, we'll tell you where to download Unica Benaco."
+  },
+  "weitere_seiten": {
+    "partner.html": {
+      "de": {
+        "ph_note": "Start: Anfang 2027 · Aufnahme kostenlos",
+        "po_pill": "Start · Anfang 2027",
+        "ps_close3": "Die Aufnahme ist kostenlos – heute und auch künftig. Wir nehmen nur Orte auf, die uns selbst überzeugt haben."
+      },
+      "it": {
+        "ph_note": "Lancio: inizio 2027 · inserimento gratuito",
+        "po_pill": "Lancio · inizio 2027",
+        "ps_close3": "L'inserimento è gratuito – oggi e anche in futuro. Inseriamo solo luoghi che ci hanno convinto di persona."
+      },
+      "en": {
+        "ph_note": "Launch: early 2027 · free to be featured",
+        "po_pill": "Launch · early 2027",
+        "ps_close3": "Being featured is free – today and in the future. We only feature places that have won us over in person."
+      }
+    },
+    "app.html": {
+      "de": {
+        "app_eyebrow": "Anfang 2027"
+      },
+      "it": {
+        "app_eyebrow": "Inizio 2027"
+      },
+      "en": {
+        "app_eyebrow": "Early 2027"
+      }
+    },
+    "confirmed.html": {
+      "de": {
+        "cf_eyebrow": "Anfang 2027"
+      },
+      "it": {
+        "cf_eyebrow": "Inizio 2027"
+      },
+      "en": {
+        "cf_eyebrow": "Early 2027"
+      }
+    }
   }
 }

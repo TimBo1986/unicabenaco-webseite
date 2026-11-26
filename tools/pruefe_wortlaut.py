@@ -2,6 +2,7 @@
 # pruefe_wortlaut.py — steht freigegebene Copy genau so in der Seite?
 #
 # Rein lesend. Nutzung: tools/pruefe_wortlaut.py docs/specs/WEB3-faq.json
+# Die Spec nennt eine Seite ("datei") und optional weitere ("weitere_seiten").
 #
 # Die Spec-Datei nennt eine Seite und je Sprache Schluessel mit ihrem Wortlaut.
 # Geprueft wird: jeder Schluessel steht im Woerterbuch der Sprache genau mit
@@ -33,14 +34,18 @@ def main():
         print('Nutzung: tools/pruefe_wortlaut.py SPEC.json', file=sys.stderr)
         sys.exit(2)
     spec = json.load(io.open(sys.argv[1], encoding='utf-8'))
-    s = io.open(spec['datei'], encoding='utf-8').read()
-    fehler = pruefe(spec, s)
-    for f in fehler:
+    # „datei“ mit den Sprachen auf oberster Ebene; dazu optional „weitere_seiten“: {datei: {de, it, en}}
+    seiten = [(spec['datei'], spec)] + list(spec.get('weitere_seiten', {}).items())
+    alle, stellen = [], 0
+    for datei, teil in seiten:
+        fehler = pruefe(teil, io.open(datei, encoding='utf-8').read())
+        alle += ['%s: %s' % (datei, f) for f in fehler]
+        stellen += sum(len(teil.get(l, {})) for l in SPRACHEN) + len(teil.get('de', {}))
+    for f in alle:
         print('  FEHLER   ' + f)
-    n = sum(len(spec.get(l, {})) for l in SPRACHEN)
-    print(('FEHLGESCHLAGEN — %d von %d Stellen' % (len(fehler), n + len(spec.get('de', {})))) if fehler
-          else 'OK — %s: %d Werte und %d Stellen im Markup wie freigegeben' % (spec['datei'], n, len(spec.get('de', {}))))
-    sys.exit(1 if fehler else 0)
+    print(('FEHLGESCHLAGEN — %d von %d Stellen' % (len(alle), stellen)) if alle
+          else 'OK — %d Seiten: %d Stellen (Woerterbuecher und Markup) wie freigegeben' % (len(seiten), stellen))
+    sys.exit(1 if alle else 0)
 
 
 if __name__ == '__main__':
