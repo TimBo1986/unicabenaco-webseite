@@ -21,7 +21,11 @@ i18n-Schlüssel in beide Richtungen). Selbsttest: `--selftest`.
 
 **Prüfer:** `pruefe_wortlaut.py docs/specs/WEB3-faq.json` OK; index, partner, app, confirmed grün gegen `4004c38`; `--selftest` grün; `rename_scan.sh` M1 = 5.
 
-**OFFEN:** IT zur Durchsicht bei Cristina. „Doppeltes faq5_a“ in IT/EN war die auskommentierte Vorfassung (live nie doppelt); sie bleibt nach CLAUDE.md stehen — Entscheidung beim Leitstand.
+| neu rot / grün (23:15) | FAQ 6 nach dem Datenschutz (eigener Server in Deutschland, Brevo nur Versand); Fundliste umgesetzt: partner `ph_note`, `po_pill`, `ps_close3`, app `app_eyebrow`, confirmed `cf_eyebrow`; Spec um `weitere_seiten` erweitert (48 Stellen) |
+
+**Entschieden (Leitstand 23:15, Tim):** Die auskommentierten Vorfassungen bleiben (CLAUDE.md), kein Lösch-Commit.
+
+**OFFEN:** IT zur Durchsicht bei Cristina.
 
 ---
 
