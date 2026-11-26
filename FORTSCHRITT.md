@@ -9,6 +9,22 @@ i18n-Schlüssel in beide Richtungen). Selbsttest: `--selftest`.
 
 ---
 
+## WEB3 — FAQ berichtigen (sieben Antworten, freigegebener Wortlaut)
+
+**Branch:** `web/web3-faq` von `4004c38` (Leitstand 26.11.2026 22:45; Texte freigegeben von Tim am 26.11.2026, IT noch zur Durchsicht bei Cristina)
+
+| Commit | Was |
+|---|---|
+| Wächter | `pruefe_seite.py` 8 kein Schlüssel live doppelt (Kommentare und Zeichenketten zählen nicht), 9 gleiche Schlüssel DE/IT/EN, 10 Markup = DE wortgleich (fünf Altbestände in partner.html als Hinweis); Selbsttest beweist alle drei |
+| rot | `docs/specs/WEB3-faq.json` (Wortlaut) und `tools/pruefe_wortlaut.py`: 28 von 28 Stellen alt |
+| grün | Markup und drei Wörterbücher im freigegebenen Wortlaut; alte Fassungen auskommentiert direkt darunter (CLAUDE.md) |
+
+**Prüfer:** `pruefe_wortlaut.py docs/specs/WEB3-faq.json` OK; index, partner, app, confirmed grün gegen `4004c38`; `--selftest` grün; `rename_scan.sh` M1 = 5.
+
+**OFFEN:** IT zur Durchsicht bei Cristina. „Doppeltes faq5_a“ in IT/EN war die auskommentierte Vorfassung (live nie doppelt); sie bleibt nach CLAUDE.md stehen — Entscheidung beim Leitstand.
+
+---
+
 ## WEB2b — Korrektur an der Live-Seite nach R2 (Knöpfe im Kopf, Alt-Texte, rename_scan)
 
 **Branch:** `web/web2b-korrektur` von `646c83e` (Leitstand 25.11.2026, Befunde R2-WEB2-1 und R2-WEB2-2)
