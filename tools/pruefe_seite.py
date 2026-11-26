@@ -37,7 +37,7 @@
 # Vermerk weg.
 # ---------------------------------------------------------------------------
 
-import io, os, re, subprocess, sys
+import io, json, os, re, subprocess, sys
 
 SPRACHEN = ('de', 'it', 'en')
 
@@ -89,6 +89,45 @@ def usage():
     sys.exit(0)
 
 
+# WEB3 (Leitstand 26.11.2026 22:45): Markup und DE-Woerterbuch wortgleich. Diese fuenf
+# Schluessel in partner.html weichen schon vor WEB3 ab (etwa „Max 8“ im Markup,
+# „Max. 8“ im Woerterbuch); gemeldet in WEB3, partner.html wird dort nicht
+# geaendert. Bis zur Entscheidung Hinweis statt Fehler.
+MARKUP_ALTBESTAND = {('partner.html', 'pr_p'), ('partner.html', 'pe_max8'),
+                     ('partner.html', 'pe_max10'), ('partner.html', 'pe_max12'),
+                     ('partner.html', 'pf_meta')}
+
+
+def woerterbuch_roh(quelle, lang):
+    """Der Quelltext eines Sprachblocks, Kommentare eingeschlossen."""
+    m = re.search(r'\n( +)%s:\{\n(.*?)\n\1},?\n\1[a-z]{2}:\{|\n( +)%s:\{\n(.*?)\n\3}\n};'
+                  % (lang, lang), quelle, re.S)
+    return (m.group(2) or m.group(4)) if m else ''
+
+
+def live_schluessel(blob):
+    """Die Schluessel, die im Browser wirklich gelten — in Reihenfolge, Doppelte
+    eingeschlossen. Zeichenketten und Kommentare werden vorher entfernt: eine
+    auskommentierte Vorfassung (CLAUDE.md: „die alte Fassung auskommentiert
+    direkt darunter“) ist kein Schluessel, und ein „x:“ in einem Text auch nicht.
+    """
+    aus, i, n = [], 0, len(blob)
+    while i < n:
+        c = blob[i]
+        if c in '"\'`':
+            j = i + 1
+            while j < n and blob[j] != c:
+                j += 2 if blob[j] == '\\' else 1
+            aus.append(' '); i = j + 1
+        elif blob.startswith('/*', i):
+            j = blob.find('*/', i + 2); i = n if j < 0 else j + 2; aus.append(' ')
+        elif blob.startswith('//', i):
+            j = blob.find('\n', i); i = n if j < 0 else j; aus.append(' ')
+        else:
+            aus.append(c); i += 1
+    return re.findall(r'(?:^|[,{]|\s)([a-z_0-9]+)\s*:', ''.join(aus), re.M)
+
+
 def woerterbuch(quelle, lang):
     """Ein Sprachblock als {schluessel: "wert mit Anfuehrungszeichen"}.
 
@@ -99,9 +138,7 @@ def woerterbuch(quelle, lang):
     # index.html und partner.html ruecken mit einem Leerzeichen ein, app.html
     # und confirmed.html mit zweien. Bis 22.11.2026 kannte der Pruefer nur ein
     # Leerzeichen und fand dort kein Woerterbuch — app.html war also nie grün.
-    m = re.search(r'\n( +)%s:\{\n(.*?)\n\1},?\n\1[a-z]{2}:\{|\n( +)%s:\{\n(.*?)\n\3}\n};'
-                  % (lang, lang), quelle, re.S)
-    blob = (m.group(2) or m.group(4)) if m else ''
+    blob = woerterbuch_roh(quelle, lang)
     return dict(re.findall(r'(?:^|[,{]\s*)\s*([a-z_0-9]+):("(?:[^"\\]|\\.)*")',
                            blob, re.M))
 
@@ -119,7 +156,7 @@ def dom_schluessel(quelle):
     return set(re.findall(r'data-i18n(?:-ph|-alt)?="([a-z_0-9]+)"', ohne))
 
 
-def pruefe(s, alt, mit_bildern=True):
+def pruefe(s, alt, mit_bildern=True, datei_name='index.html'):
     """Gibt (fehler, hinweise) zurueck. s = Datei jetzt, alt = Vergleichsstand."""
     fehler, hinweise = [], []
     sichtbar = re.sub(r'<!--.*?-->', lambda c: ' ' * len(c.group(0)), s, flags=re.S)
@@ -174,6 +211,34 @@ def pruefe(s, alt, mit_bildern=True):
             else:
                 fehler.append('ABSCHNITT WEG? %s stand im DOM und fehlt jetzt, '
                               'ohne Vermerk im Woerterbuch' % k)
+
+    # 8 · kein Schluessel doppelt in einem Woerterbuch (WEB3): im Browser gilt
+    #     sonst still der letzte, und die Seite zeigt nicht, was man liest
+    live = {l: live_schluessel(woerterbuch_roh(s, l)) for l in SPRACHEN}
+    for l in SPRACHEN:
+        doppelt = sorted({k for k in live[l] if live[l].count(k) > 1})
+        for k in doppelt:
+            fehler.append('DOPPELT %s.%s steht %dx im Woerterbuch' % (l, k, live[l].count(k)))
+
+    # 9 · alle drei Woerterbuecher mit denselben Schluesseln (WEB3)
+    for l in ('it', 'en'):
+        for k in sorted(set(live['de']) - set(live[l])):
+            fehler.append('Schluessel %s fehlt in %s (steht in DE)' % (k, l.upper()))
+        for k in sorted(set(live[l]) - set(live['de'])):
+            fehler.append('Schluessel %s steht nur in %s, nicht in DE' % (k, l.upper()))
+
+    # 10 · Markup = DE-Woerterbuch, wortgleich (WEB3; Alt-Texte siehe R2-WEB2-2)
+    ohne_kommentar = re.sub(r'<!--.*?-->', ' ', s, flags=re.S)
+    for m in re.finditer(r'<([a-z0-9]+)\b[^>]*\bdata-i18n="([a-z_0-9]+)"[^>]*>(.*?)</\1>',
+                         ohne_kommentar, re.S):
+        k, innen = m.group(2), m.group(3)
+        if k not in woerter['de']:
+            continue
+        soll = json.loads(woerter['de'][k])
+        if innen != soll:
+            text = 'MARKUP %s ungleich DE: %r statt %r' % (k, innen[:60], soll[:60])
+            (hinweise if (datei_name, k) in MARKUP_ALTBESTAND else fehler).append(
+                text + (' (Altbestand, gemeldet in WEB3)' if (datei_name, k) in MARKUP_ALTBESTAND else ''))
 
     # 6 · keine neuen externen Verweise
     for u in sorted(set(re.findall(r'https?://[^"\'\\ )<]+', s))):
@@ -249,8 +314,37 @@ def selftest():
               + '\n  '.join(falsch[:3]))
         return 1
 
+    # WEB3: die Punkte 8–10 schlagen an, und eine auskommentierte Vorfassung nicht
+    de = woerterbuch(s, 'de')
+    k = next(x for x in sorted(set(re.findall(r'data-i18n="([a-z_0-9]+)"', s))) if x in de and x not in GLEICH_OK)
+    blob_de = woerterbuch_roh(s, 'de')
+    if len(live_schluessel(blob_de)) != len(de):
+        print('FEHLGESCHLAGEN — live_schluessel findet %d, woerterbuch %d Schluessel in DE'
+              % (len(live_schluessel(blob_de)), len(de)))
+        return 1
+    faelle = [
+        ('DOPPELT', blob_de + ',\n  %s:"doppelt"' % k, 'de', 'DOPPELT de.%s' % k),
+        ('IT ohne Schluessel', re.sub(r'(?m)(^\s*|[,{]\s*)%s:"(?:[^"\\]|\\.)*",?' % k, r'\1',
+                                      woerterbuch_roh(s, 'it'), count=1), 'it', 'Schluessel %s fehlt in IT' % k),
+    ]
+    for name, neu_blob, lang, erwartet in faelle:
+        t = s.replace(woerterbuch_roh(s, lang), neu_blob, 1)
+        fe, _ = pruefe(t, None, mit_bildern=False)
+        if not any(f.startswith(erwartet) for f in fe):
+            print('FEHLGESCHLAGEN — %s nicht gemeldet (erwartet: %s)' % (name, erwartet))
+            return 1
+    markup = re.sub(r'(data-i18n="%s"[^>]*>)' % k, r'\1VERAENDERT ', s, count=1)
+    if not any(f.startswith('MARKUP %s' % k) for f in pruefe(markup, None, mit_bildern=False)[0]):
+        print('FEHLGESCHLAGEN — Markup ungleich DE bei %s nicht gemeldet' % k)
+        return 1
+    alt_fassung = s.replace(blob_de, blob_de + '\n  /* Vorherige Fassung: */ // %s:"alt",' % k, 1)
+    if any(f.startswith('DOPPELT') for f in pruefe(alt_fassung, None, mit_bildern=False)[0]):
+        print('FEHLGESCHLAGEN — eine auskommentierte Vorfassung gilt als doppelter Schluessel')
+        return 1
+
     print('OK — Abschnitt mit %d Schluesseln entfernt, %d davon gemeldet. '
-          'Unveraenderte Datei bleibt still.' % (len(weg), len(treffer)))
+          'Unveraenderte Datei bleibt still. Doppelt, fehlende Sprache und Markup '
+          'ungleich DE werden gemeldet, eine auskommentierte Vorfassung nicht.' % (len(weg), len(treffer)))
     return 0
 
 
@@ -271,7 +365,7 @@ def main():
     alt = subprocess.run(['git', 'show', '%s:%s' % (basis, datei)],
                          capture_output=True, text=True).stdout
 
-    fehler, hinweise = pruefe(s, alt)
+    fehler, hinweise = pruefe(s, alt, datei_name=os.path.basename(datei))
     for h in hinweise:
         print('  hinweis  ' + h)
     for f in fehler:
